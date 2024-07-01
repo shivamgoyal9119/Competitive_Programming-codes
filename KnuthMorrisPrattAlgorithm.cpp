@@ -1,10 +1,10 @@
 #include<iostream>
 using namespace std;
 
-void getUpdtLPS(string &s, vector<int> &LPS){
-    int len = 0, n = s.size(), i = 1;
+void getFillLPS(string &p, vector<int> &LPS, int n){
+    int len = 0, i = 1;
     while(i < n){
-        if(s[i] == s[len]) LPS[i++] = ++len;
+        if(p[len] == p[i]) LPS[i++] = ++len;
         else{
             if(len == 0) LPS[i++] = 0;
             else len = LPS[len-1];
@@ -12,24 +12,15 @@ void getUpdtLPS(string &s, vector<int> &LPS){
     }
 }
 
-int main(){
-
-    string s = "abcbabcaababaaab";
-    int n = s.size();
-    vector<int> LPS(n, 0);
-    getUpdtLPS(s, LPS);
-
-    for(int i = 0; i<n; i++) cout<<LPS[i]<<" ";
-    cout<<endl;
-
-    string pattern = "ab";
-    int ans = 0, i = 0, j = 0;
+void getAns(string &s, string &p, vector<int> &v){
+    int ans = 0, i = 0, j = 0, n = s.size(), m = p.size();
+    vector<int> LPS(m, 0);
+    getFillLPS(p, LPS, m);
     while(i < n){
-        if(s[i] == pattern[j]){
+        if(s[i] == p[j]){
             i++, j++;
-            if(j >= pattern.size()){
-                ans += 1;
-                // cout<<i-j<<endl;
+            if(j >= m){
+                v.push_back(i-m);
                 j = LPS[j-1];
             }
         }else{
@@ -37,8 +28,17 @@ int main(){
             else j = LPS[j-1];
         }
     }
+}
 
-    cout<<ans<<endl;
+int main(){
+
+    string s = "ababababazzabababb", p = "aba";
+    vector<int> ans;
+    getAns(s, p, ans);
+    for(int i = 0; i<ans.size(); i++){
+        cout<<ans[i]<<" ";
+    }cout<<endl;
+
 
     return 0;
 }
