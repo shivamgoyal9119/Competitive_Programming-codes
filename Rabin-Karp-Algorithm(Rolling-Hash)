@@ -1,0 +1,31 @@
+#define ll long long int
+
+vector<int> getAns(string &s, string &p){
+    int n = s.size(), m = p.size();
+    ll mod = pow(10, 9) + 7, hash = 0, powBaseLen = 1, hashRoll = 0;
+    for(int i = 0; i<m; i++){
+        hash = (hash*26 + (p[i]-'a'+1))%mod;
+        hashRoll = (hashRoll*26 + (s[i]-'a'+1))%mod;
+        if(i != 0) powBaseLen = (powBaseLen*26)%mod;
+    }
+
+    vector<int> ans;
+    if(hash == hashRoll) ans.push_back(0);
+    for(int i = 1; i<=(n-m); i++){
+        ll diff = (powBaseLen*(s[i-1]-'a'+1))%mod;
+        hashRoll = ((hashRoll - diff + mod)*26%mod + (s[i+m-1]-'a'+1))%mod;
+        if(hashRoll == hash) ans.push_back(i);
+    }
+    return ans;
+}
+
+int main(){
+
+    string s = "ababababazzabababb", p = "aba";
+    vector<int> ans = getAns(s, p);
+    for(int i = 0; i<ans.size(); i++){
+        cout<<ans[i]<<" ";
+    }cout<<endl;
+
+    return 0;
+}
