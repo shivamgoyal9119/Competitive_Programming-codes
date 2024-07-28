@@ -1,0 +1,21 @@
+class Solution{
+public:
+  long long countSubstring(string S){
+    long long int ans = 0, prev_ans = 0, prefix_sum = 0;
+    unordered_map<int, int> store;
+    store[0] = 1;
+    for(auto i : S){
+        if(i == '1'){
+            prev_ans += store[prefix_sum];
+            prefix_sum += 1;
+        }else{
+            prefix_sum -= 1;
+            prev_ans -= store[prefix_sum];
+        }
+        ans += prev_ans;
+        store[prefix_sum] += 1;
+    }
+    
+    return ans;
+  }
+};
