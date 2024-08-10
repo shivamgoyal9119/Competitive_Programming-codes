@@ -1,0 +1,202 @@
+#include<iostream>
+#include<math.h>
+using namespace std;
+
+void selectionSort(int* arr, int size){
+    for(int i = 0; i<(size-1); i++){
+        for(int j = i+1; j<size; j++){
+            if(arr[j]<arr[i]){
+                swap(arr[i], arr[j]);
+            }
+        }
+    }
+}
+// -----------------------------------------------------------------------------
+void bubbleSort(int* brr, int size){
+    for(int i = 1; i<size; i++){
+        for(int j = 0; j<(size-i); j++){
+            if(brr[j]>brr[j+1]){
+                swap(brr[j], brr[j+1]);
+            }
+        }
+    }
+}
+// -----------------------------------------------------------------------------
+void insertionSort(int* crr, int size){
+    for(int i = 1; i<size; i++){
+        // int index = i;
+        int compare = crr[i];
+        int j = (i-1);
+        for( ; j>=0; j--){
+            if(crr[j]>compare){
+                crr[j+1] = crr[j];
+            }
+            else{
+                break;
+            }
+        }
+        crr[j+1] = compare;
+    }
+}
+// -----------------------------------------------------------------------------
+void merge(int* drr, int s, int e){
+    int mid = s+(e-s)/2;
+    int size1 = mid-s+1;
+    int size2 = e-mid;
+
+    int* drr1 = new int[size1];
+    int* drr2 = new int[size2];
+
+    // putting value's in drr1
+    int b = s;
+    for(int i = 0; i<size1; i++){
+        drr1[i] = drr[b++];
+    }
+    // putting value's in drr2
+    b = mid+1;
+    for(int i = 0; i<size2; i++){
+        drr2[i] = drr[b++];
+    }
+
+    // merge two sorted array
+    int index1 = 0;
+    int index2 = 0;
+    int mainindex = s;
+
+    while(index1<size1 && index2<size2){
+        if(drr1[index1]>drr2[index2]){
+            drr[mainindex++] = drr2[index2++];
+        }
+        else{
+            drr[mainindex++] = drr1[index1++];
+        }
+    }
+
+    while(index1<size1){
+        drr[mainindex++] = drr1[index1++];
+    }
+
+    while(index2<size2){
+        drr[mainindex++] = drr2[index2++];
+    }
+
+    delete []drr1;
+    delete []drr2;
+
+}
+
+void mergeSort(int* drr, int s, int e){
+    // base case
+    if(s>=e){
+        return;
+    }
+
+    int mid = s+(e-s)/2;
+
+    // recursive call
+    mergeSort(drr, s, mid);
+
+    mergeSort(drr, mid+1, e);
+
+    merge(drr, s, e);
+
+}
+// -----------------------------------------------------------------------------
+int getPartition(int* err, int s, int e){
+    int pivotElement = err[s];
+    int count = 0;
+    for(int i = (s+1); i<=e; i++){
+        if(err[i]<pivotElement){
+            count++;
+        }
+    }
+    // *** pivotIndex
+    int pivotIndex = s+count;
+
+    swap(err[s], err[pivotIndex]);
+
+    int start = s;
+    int end = e;
+
+    while(start<pivotIndex && end>pivotIndex){
+
+        while(err[start]<pivotElement){
+            start++;
+        }
+
+        while(err[end]>=pivotElement){
+            end--;
+        }
+
+        if(err[start]>pivotElement && err[end]<pivotElement){
+            swap(err[start++], err[end--]);
+        }
+    }
+
+    return pivotIndex;
+}
+
+void quickSort(int* err, int s, int e){
+    // base case 
+    if(s>=e){
+        return;
+    }
+
+    int p = getPartition(err, s, e);
+    // recursive call;
+
+    quickSort(err, s, p-1);
+
+    quickSort(err, p+1, e);
+}
+// -----------------------------------------------------------------------------
+
+
+int main(){
+// kadane's algo. == pending
+    
+// shallow and deep copy is pending...
+//  int m = -7;
+//  m = m>>1;
+//  cout<<m;
+// do all five sorting. musttt
+    
+// 1] selection sort == done
+    int arr[7] = {8,9,7,1,3,5,2};
+    selectionSort(arr, 7);
+    for(int i = 0; i<7; i++){
+        cout<<arr[i]<<" ";
+    }cout<<endl;
+
+// 2] bubble sort == done
+    int brr[7] = {3,2,4,5,21,8,1};
+    bubbleSort(brr, 7);
+    for(int i = 0; i<7; i++){
+        cout<<brr[i]<<" ";
+    }cout<<endl;
+
+// 3] insertion sort == done
+    int crr[7] = {3,2,8,7,6,5,4};
+    insertionSort(crr, 7);
+    for(int i = 0; i<7; i++){
+        cout<<crr[i]<<" ";
+    }cout<<endl;
+
+// 4] merge sort == done
+    int drr[6] = {3,2,4,6,8,1};
+    mergeSort(drr, 0, 5);
+    for(int i = 0; i<6; i++){
+        cout<<drr[i]<<" ";
+    }cout<<endl;
+
+// 5] quick sort == done
+    int err[8] = {2,4,1,6,9,9,9,9};
+    quickSort(err, 0, 7);
+    for(int i = 0; i<8; i++){
+        cout<<err[i]<<" ";
+    }cout<<endl;
+
+
+
+    return 0;
+}
