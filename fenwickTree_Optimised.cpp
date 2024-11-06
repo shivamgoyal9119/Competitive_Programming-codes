@@ -4,7 +4,7 @@ using namespace std;
 int main(){
 
     // Fenwick Tree Pre-processing In O(N)
-    // Uisng Prefix_Sum For Getting Optimised Pre-Processing
+    // Using Prefix_Sum For Getting Optimised Pre-Processing
 
     int n, p_sum = 0;
     cin>>n;
