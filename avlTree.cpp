@@ -80,8 +80,8 @@ avl_tree_node* insert(avl_tree_node* root, int d){
 void get_preorder_traversal(avl_tree_node *root){
     if(root == NULL) return;
 
-    get_preorder_traversal(root->left);
     cout<<root->data<<"  ";
+    get_preorder_traversal(root->left);
     get_preorder_traversal(root->right);
 }
 
