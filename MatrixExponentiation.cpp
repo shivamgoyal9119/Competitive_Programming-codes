@@ -4,7 +4,7 @@ using namespace std;
 static const int MOD = 1e9 + 7;
 
 vector<vector<int> > matmul(vector<vector<int> > &m1, vector<vector<int> > &m2, int n){
-    vector<vector<int> > ans(6, vector<int> (n, 0));
+    vector<vector<int> > ans(n, vector<int> (n, 0));
     for(int i = 0; i < n; i++){
         for(int j = 0; j < n; j++){
             long long cnt = 0;
