@@ -25,11 +25,36 @@ vector<vector<int> > matExpo(vector<vector<int> > &mat, int n){
     return ans;
 }
 
+vector<vector<ll>> matExpo(vector<vector<ll>> base, ll exp) {  // use when recursion stack space matter.
+    int size = base.size();
+    vector<vector<ll>> result(size, vector<ll>(size, 0));
+
+    // Identity matrix
+    for (int i = 0; i < size; ++i)
+        result[i][i] = 1;
+
+    while (exp > 0) {
+        if (exp % 2 == 1)
+            result = matmul(result, base, size);
+        base = matmul(base, base, size);
+        exp /= 2;
+    }
+
+    return result;
+}
+
 int main(){
 
     // For using purpose we only need the matrix and power(n)
     // ans = matExpo(matrix, power);
-    
 
+
+
+
+
+
+    
+    
+    // ********** Fully Tested Via (Codeforces & Leetcode) **********
     return 0;
 }
