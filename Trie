@@ -1,0 +1,58 @@
+class Trie {
+private:
+    struct Node{
+        vector<Node*> links;
+        bool flag = false;
+
+        Node() : links(26, NULL) {}
+    };
+public:
+    Node* root;
+    Trie() {
+        root = new Node();
+    }
+    
+    void insert(string word) {
+        Node* temp = root;
+        for(int i = 0; i < word.size(); i++){
+            int id = word[i] - 'a';
+            if(temp->links[id] == NULL){
+                temp->links[id] = new Node();
+                if(i == word.size() - 1) temp->links[id]->flag = true;
+                temp = temp->links[id];
+            }else{
+                if(i == word.size() - 1) temp->links[id]->flag = true;
+                temp = temp->links[id];
+            }
+        }
+    }
+    
+    bool search(string word) {
+        Node* temp = root;
+        for(int i = 0; i < word.size(); i++){
+            int id = word[i] - 'a';
+            if(temp->links[id] != NULL){
+                temp = temp->links[id];
+                if(i == word.size() - 1){
+                    if(temp->flag == true) return true;
+                    else return false;
+                }
+            }else return false;
+        }
+        return false;
+    }
+    
+    bool startsWith(string prefix) {
+        Node* temp = root;
+        for(int i = 0; i < prefix.size(); i++){
+            int id = prefix[i] - 'a';
+            if(temp->links[id] != NULL){
+                temp = temp->links[id];
+                if(i == prefix.size() - 1) return true;
+            }else return false;
+        }
+        return false;
+    }
+};
+
+// Leetcode TESTED ... :)
